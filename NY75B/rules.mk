@@ -11,5 +11,6 @@ COMBO_ENABLE = yes
 LAYER_LOCK_ENABLE = yes
 
 # Custom QMK here
+AUTOCORRECT_ENABLE = yes
 
 SRC += features/achordion.c
