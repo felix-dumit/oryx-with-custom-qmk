@@ -1,3 +1,5 @@
+#include "features/achordion.h"
+
 #include QMK_KEYBOARD_H
 #include "version.h"
 #define MOON_LED_LEVEL LED_LEVEL
@@ -164,6 +166,8 @@ bool rgb_matrix_indicators_user(void) {
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+  if (!process_achordion(keycode, record)) { return false; }
+
   switch (keycode) {
 
     case RGB_SLD:
@@ -264,3 +268,20 @@ void dance_0_reset(tap_dance_state_t *state, void *user_data) {
 tap_dance_action_t tap_dance_actions[] = {
         [DANCE_0] = ACTION_TAP_DANCE_FN_ADVANCED(on_dance_0, dance_0_finished, dance_0_reset),
 };
+
+
+// Custom QMK here
+void matrix_scan_user(void) {
+  achordion_task();
+}
+
+// uint16_t achordion_timeout(uint16_t tap_hold_keycode) {
+//   switch (tap_hold_keycode) {
+//     case KC_SPACE:
+//     case KC_TAB:
+//       return 0;  // Bypass Achordion for these keys.
+//   }
+
+//   // TODO: disabled because it's delaying layer switch
+//   return 0;  // Otherwise use a timeout of 800 ms.
+// }
